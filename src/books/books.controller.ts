@@ -1,13 +1,15 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, UseInterceptors } from '@nestjs/common';
 import { BooksService } from './books.service';
+import { ResponseBuilder } from 'src/adapters/response-builder';
 
 @Controller('books')
+@UseInterceptors(ResponseBuilder)
 export class BooksController {
   constructor(private readonly bookService: BooksService) {}
 
   @Get()
   getAllBooks(): any {
-    return this.bookService.getBooks();
+    return this.bookService.getBooks()
   }
 
   @Get(':id')
